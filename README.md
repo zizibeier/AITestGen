@@ -207,7 +207,7 @@ my_auto_test/
 ### 5.2 安装
 
 ```bash
-git clone https://github.com/<your-org>/my_auto_test.git
+git clone https://github.com/zizibeier/AITestGen.git
 cd my_auto_test
 
 python3.13 -m venv venv
