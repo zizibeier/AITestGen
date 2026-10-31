@@ -1,0 +1,46 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "百度搜索 API",
+    "version": "1.0.0",
+    "description": "用于演示的百度网页搜索接口"
+  },
+  "servers": [
+    {
+      "url": "https://www.baidu.com",
+      "description": "百度主站"
+    }
+  ],
+  "paths": {
+    "/s": {
+      "get": {
+        "summary": "百度关键词搜索",
+        "description": "通过 GET 请求查询关键词结果",
+        "parameters": [
+          {
+            "name": "wd",
+            "in": "query",
+            "required": true,
+            "description": "搜索关键词",
+            "schema": {
+              "type": "string",
+              "example": "自动化测试"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回 HTML 页面",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

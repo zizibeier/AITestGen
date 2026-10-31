@@ -1,0 +1,150 @@
+# locators/iframe_locators.yaml
+# 只包含iframe内的元素定位
+
+# 3D视图区域
+viewer_3d:
+  canvas: "canvas"
+  rotate_center: ".rotate-box"
+  tooltip: "#cssRender div[style*='background-color: rgba(0, 0, 0, 0.5)']"
+
+# Canvas 截图比对
+canvas_screenshot:
+  # 动态浮层：弹窗 / 提示 / 加载态 / 常驻 UI，截图时隐藏，避免干扰像素比对。
+  # 这些选择器会同时注入主页面和查看器 iframe。
+  overlays:
+    - "#rightMenus"
+    - ".submenu"
+    - "#cssRender"
+    - ".dragBox"
+    - ".rotate-box"
+    - ".selection-tooltip"
+    - ".fc-loader"
+    - ".loading-progress"
+    - ".ant-message"
+    # 底部工具栏（桌面 / 移动）
+    - ".fc-footer-tool-primary"
+    - ".fc-mobile-footer-tool-primary"
+    # 右上角方向盘（独立小 canvas）
+    - "[id^='forface3D-viewHelper-']"
+    # 主页面浮在 canvas 上方的模型名称
+    - "[class*='viewer_viewer_preview_title']"
+
+# 模型选中相关
+model_selection:
+  selected_point: ".selected-point, .point-selected"
+  selected_line: ".selected-line, .line-selected"
+  selected_face: ".selected-face, .face-selected"
+  selection_highlight: ".selection-highlight"
+  selection_tooltip: ".selection-tooltip"
+
+# 右键菜单 - 添加批注相关选项
+right_menu:
+  container: "#rightMenus"
+  menu_items:
+    show_hide: "#rightMenus_showOrHidden"
+    hide: "#rightMenus_show"
+    show_all: "#rightMenus_showAll"
+    add_annotation: "#rightMenus_addAnnotation"
+    add_annotation_on_point: "#rightMenus_addAnnotationOnPoint"
+    add_annotation_on_line: "#rightMenus_addAnnotationOnLine"
+    add_annotation_on_face: "#rightMenus_addAnnotationOnFace"
+    hide_annotation: "#rightMenus_showOrHiddenAnnotation"
+    single_restore: "#rightMenus_singleRestore"
+    all_restore: "#rightMenus_allRestore"
+  submenu:
+    container: ".submenu"
+    items: ".submenu-item"
+    hide: "#submenu_show"
+    transparent: "#submenu_transparent"
+    transparent_other: "#submenu_transparentOther"
+    hide_other: "#submenu_hiddenOther"
+    show_all: "#submenu_showAll"
+
+# 批注面板
+annotation_panel:
+  container: ".dragBox:has(.dragHeaderTitle:has-text('批注'))"
+  panel_header: ".dragHeader"
+  close_icon: ".dragCloseIcon"
+  annotation_list: ".annotation-list-container"
+  annotation_items: ".annotation-item"
+  annotation_empty: ".annotation-empty"
+  empty_title: ".annotation-empty-title"
+
+  # 批注输入框
+  annotation_input: ".annotation-input, textarea, [contenteditable='true']"
+  annotation_textarea: ".annotation-textarea"
+  save_btn: "button:has-text('确定'), button:has-text('保存'), .save-btn"
+  cancel_btn: "button:has-text('取消'), .cancel-btn"
+
+  # 确认对话框
+  confirm_dialog: ".fc-annotation-confirm"
+  confirm_content: ".fc-confirm-content"
+  confirm_cancel: ".fc-confirm-cancel-btn"
+  confirm_ok: ".fc-confirm-btn"
+
+
+# 基本信息面板
+basic_info_panel:
+  container: ".dragBox:has(.dragHeaderTitle:has-text('基本信息'))"
+  panel_header: ".dragHeader"
+  close_icon: ".dragCloseIcon"
+  model_name: ".fc-model-info-item:first-child .fc-info-value"
+  volume: ".fc-model-info-item:nth-child(2) .fc-info-value"
+  surface_area: ".fc-model-info-item:nth-child(3) .fc-info-value"
+  bounding_box: ".fc-model-info-item:last-child .fc-info-value"
+
+# 颜色选择面板
+color_panel:
+  container: ".dragBox:has(.dragHeaderTitle:has-text('颜色选择'))"
+  panel_header: ".dragHeader"
+  close_icon: ".dragCloseIcon"
+  color_picker: ".chrome-picker"
+  color_presets: ".fc-color-selector-tool span"
+  color_input: ".fc-color-selector-tool input"
+  confirm_btn: ".confimBtn"
+  color_value_display: ".fc-color-value"
+  clear_btn: ".clearBtn"
+
+# 结构树面板
+structure_tree_panel:
+  container: ".dragBox:has(.dragHeaderTitle:has-text('结构树'))"
+  panel_header: ".dragHeader"
+  close_icon: ".dragCloseIcon"
+  search_input: ".treeSearchInput"
+  search_btn: ".searchBtn"
+  tree_container: ".react-checkbox-tree"
+  tree_items: ".rct-node"
+  checkbox: ".rct-checkbox"
+
+# 剖切面板
+sectioning_panel:
+  container: ".dragBox:has(.dragHeaderTitle:has-text('剖切'))"
+  panel_header: ".dragHeader"
+  close_icon: ".dragCloseIcon"
+  hide_section_switch: "#hiddenParting"
+  reverse_section_switch: "#reverseParting"
+  reset_btn: ".fc-parting-restore"
+
+# 底部工具栏
+footer_toolbar:
+  container: ".fc-footer-tool-primary"
+  buttons:
+    home: ".fc-tool-btn-box:has(.ic_home)"
+    rotate: ".fc-tool-btn-box:has(.ic_play)"
+    pan: ".fc-tool-btn-box:has(.ic_move)"
+    measure: ".fc-tool-btn-box:has(.ic_measure)"
+    model_property: ".fc-tool-btn-box:has(.ic_model_attribute)"
+    sectioning: ".fc-tool-btn-box:has(.ic_parting)"
+    structure_tree: ".fc-tool-btn-box:has(.ic_structureTree)"
+    explode: ".fc-tool-btn-box:has(.ic_modelSplit)"
+    bounding_box: ".fc-tool-btn-box:has(.ic_boundingBox)"
+    drag: ".fc-tool-btn-box:has(.ic_drag)"
+    color: ".fc-tool-btn-box:has(.ic_color)"
+    realtime_position: ".fc-tool-btn-box:has(.ic_pick_up)"
+    axis: ".fc-tool-btn-box:has(.ic_axis)"
+    info: ".fc-tool-btn-box:has(.ic_info)"
+    display_switch: ".fc-tool-btn-box:has(.ic_showSwitch)"
+    screenshot: ".fc-tool-btn-box:has(.ic_screenshot)"
+    fullscreen: ".fc-tool-btn-box:has(.ic_fullscreen)"
+    settings: ".fc-tool-btn-box:has(.ic_setting)"
+    share: ".fc-tool-btn-box:has(.ic_shareBtn)"

@@ -1,0 +1,42 @@
+# api/data/api_config.yaml
+# 接口路径配置
+
+# 认证相关接口
+auth:
+  get_token: "/forface/external/oauth/getAccessToken"
+
+#文件解析相关接口
+analysis:
+  upload_file: "/forface/external/analysis/uploadFile"
+  upload_filepath: "/forface/external/analysis/uploadFilePath"
+  file_by_id: "/forface/external/analysis/findByFileId"
+  file_by_page: "/forface/external/analysis/findByPage"
+
+# 百度搜索（第三方站点，接口定义见 docs/api_specs/baidu_search.json）
+baidu:
+  base_url: "https://www.baidu.com"
+  search: "/s"
+
+# ==================== Builder ====================
+# Web 前端内部接口域名：鉴权使用 Token / Cookie 请求头
+builder_base_url: "https://prod.forface3d.com"
+# 对外 OpenAPI 域名：鉴权使用 AppID/Secret 换取的 Bearer Token
+builder_open_base_url: "https://api.forface3d.com"
+
+builder:
+  # 对外 OpenAPI（BuilderOpenEndpoints）
+  open:
+    # getAccessToken 复用 auth.get_token，避免同一路径维护两份
+    auto_request_model: "/forface/builder/test/external/autoRequestModel"
+
+  # Web 前端内部接口（BuilderWebEndpoints）
+  web:
+    query_my_model_list: "/forface/builder/model/queryMyModelList"
+    query_history_list: "/forface/builder/requestShunt/queryHistoryList"
+    model_info: "/forface/builder/model/modelInfo"
+    download_base_model_file: "/forface/builder/model/downloadBaseModelFile"
+    download_template: "/forface/builder/modelInterface/downloadTemplate"
+    export_equation: "/forface/builder/equation/exportEquation"
+    query_equation_list: "/forface/builder/equation/queryEquationList"
+    drawing_template_show: "/forface/builder/drawing/template/show"
+

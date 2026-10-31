@@ -1,0 +1,143 @@
+{
+  "file_upload_tests": [
+    {
+      "name": "标准上传-使用缓存",
+      "file_name": "配重块.stp",
+      "params": "21)71",
+      "webhookKey": "${global:webhook_key}",
+      "useCache": "true",
+      "extraInfo": "21)71过",
+      "previewType": "1",
+      "needBusinessService": "1",
+      "needStlLightWeight": "1",
+      "minimumThicknessThreshold": "0.8",
+      "highRiskAreaDefine": "100.0",
+      "coverColor": "#85A2CD",
+      "expected_status": "success"
+    },
+    {
+      "name": "不使用缓存",
+      "file_name": "配重块.stp",
+      "params": "",
+      "webhookKey": "${global:webhook_key}",
+      "useCache": "false",
+      "extraInfo": "测试不使用缓存",
+      "previewType": "1",
+      "needBusinessService": "1",
+      "needStlLightWeight": "1",
+      "minimumThicknessThreshold": "0.8",
+      "highRiskAreaDefine": "100.0",
+      "coverColor": "#85A2CD",
+      "expected_status": "success"
+    },
+    {
+      "name": "无Webhook回调",
+      "file_name": "配重块.stp",
+      "params": "",
+      "webhookKey": "",
+      "useCache": "true",
+      "extraInfo": "无Webhook测试",
+      "previewType": "1",
+      "needBusinessService": "1",
+      "needStlLightWeight": "1",
+      "minimumThicknessThreshold": "0.8",
+      "highRiskAreaDefine": "100.0",
+      "coverColor": "#85A2CD",
+      "expected_status": "success"
+    }
+  ],
+  "preview_type_tests": [
+    {"name": "预览格式-glb", "previewType": "0", "description": "glb格式"},
+    {"name": "预览格式-f3d", "previewType": "1", "description": "f3d格式"}
+  ],
+  "business_service_tests": [
+    {"name": "启用业务服务", "needBusinessService": "1", "description": "包含分类服务和薄壁检测"},
+    {"name": "禁用业务服务", "needBusinessService": "0", "description": "不调用业务服务"}
+  ],
+  "light_weight_tests": [
+    {"name": "启用轻量化", "needStlLightWeight": "1", "description": "生成stl轻量化文件"},
+    {"name": "禁用轻量化", "needStlLightWeight": "0", "description": "不生成轻量化文件"}
+  ],
+  "cache_tests": [
+    {"name": "使用缓存", "useCache": "true", "description": "相同文件直接返回缓存"},
+    {"name": "不使用缓存", "useCache": "false", "description": "强制重新处理"}
+  ],
+  "wall_thickness_tests": [
+    {"name": "严格薄壁阈值", "minimumThicknessThreshold": "0.5", "description": "<=0.5mm为薄壁"},
+    {"name": "宽松薄壁阈值", "minimumThicknessThreshold": "1.0", "description": "<=1.0mm为薄壁"},
+    {"name": "默认薄壁阈值", "minimumThicknessThreshold": "0.8", "description": "<=0.8mm为薄壁"}
+  ],
+  "high_risk_area_tests": [
+    {"name": "严格高风险区域", "highRiskAreaDefine": "50.0", "description": ">=50mm²为高风险"},
+    {"name": "宽松高风险区域", "highRiskAreaDefine": "200.0", "description": ">=200mm²为高风险"},
+    {"name": "默认高风险区域", "highRiskAreaDefine": "100.0", "description": ">=100mm²为高风险"}
+  ],
+  "cover_color_tests": [
+    {"name": "默认蓝色", "coverColor": "#85A2CD", "description": "标准蓝色"},
+    {"name": "红色封面", "coverColor": "#FF0000", "description": "红色"},
+    {"name": "绿色封面", "coverColor": "#00FF00", "description": "绿色"},
+    {"name": "自定义颜色", "coverColor": "#F5A623", "description": "橙色"}
+  ],
+  "param_combinations": [
+    {
+      "name": "完整处理-默认参数",
+      "previewType": "1",
+      "needBusinessService": "1",
+      "needStlLightWeight": "1",
+      "useCache": "true",
+      "minimumThicknessThreshold": "0.8",
+      "highRiskAreaDefine": "100.0",
+      "coverColor": "#85A2CD"
+    },
+    {
+      "name": "仅预览和轻量化",
+      "previewType": "1",
+      "needBusinessService": "0",
+      "needStlLightWeight": "1",
+      "useCache": "true",
+      "minimumThicknessThreshold": "0.8",
+      "highRiskAreaDefine": "100.0",
+      "coverColor": "#85A2CD"
+    },
+    {
+      "name": "仅预览和业务服务",
+      "previewType": "1",
+      "needBusinessService": "1",
+      "needStlLightWeight": "0",
+      "useCache": "true",
+      "minimumThicknessThreshold": "0.8",
+      "highRiskAreaDefine": "100.0",
+      "coverColor": "#85A2CD"
+    },
+    {
+      "name": "仅业务服务和轻量化",
+      "previewType": "0",
+      "needBusinessService": "1",
+      "needStlLightWeight": "1",
+      "useCache": "true",
+      "minimumThicknessThreshold": "0.8",
+      "highRiskAreaDefine": "100.0",
+      "coverColor": "#85A2CD"
+    },
+    {
+      "name": "自定义薄壁阈值-严格",
+      "previewType": "1",
+      "needBusinessService": "1",
+      "needStlLightWeight": "1",
+      "useCache": "true",
+      "minimumThicknessThreshold": "0.3",
+      "highRiskAreaDefine": "100.0",
+      "coverColor": "#85A2CD"
+    },
+    {
+      "name": "自定义高风险区域-严格",
+      "previewType": "1",
+      "needBusinessService": "1",
+      "needStlLightWeight": "1",
+      "useCache": "true",
+      "minimumThicknessThreshold": "0.8",
+      "highRiskAreaDefine": "30.0",
+      "coverColor": "#85A2CD"
+    }
+  ]
+}

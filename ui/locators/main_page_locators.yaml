@@ -1,0 +1,19 @@
+# locators/main_page_locators.yaml
+# 主页面（非iframe内）的元素定位
+
+main_page:
+  # 文件上传
+  file_input: 'input[type="file"]'
+  upload_btn: "button:has-text('上传')"
+  upload_area: ".upload-area"
+
+  # 加载状态
+  model_loading: ".loading-progress"
+  loader: ".fc-loader"
+
+  # iframe
+  viewer_iframe: "#viewerIframe"
+
+  # 错误提示
+  error_message: ".error-message"
+  error_toast: ".ant-message-error"

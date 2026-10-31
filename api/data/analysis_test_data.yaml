@@ -1,0 +1,430 @@
+# model_test/api/data/test.yaml
+# analysis 文件上传测试数据
+
+# ==================== 测试用例 ====================
+groups:
+  # 1. 标准测试
+  - name: "standard"
+    description: "标准功能测试"
+    cases:
+      - name: "标准上传-默认参数"
+        file_name: "${getfile:${global:test_files_dir}:3mf,stp}"
+        extra_info: "测试默认参数 | ${datetime_now}"
+        expected_status: "success"
+
+      - name: "标准上传-使用缓存"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        use_cache: "true"
+        extra_info: "测试使用缓存 | ${uuid}"
+        expected_status: "success"
+
+      - name: "标准上传-不使用缓存"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        use_cache: "false"
+        extra_info: "测试不使用缓存 | ${uuid}"
+        expected_status: "success"
+
+      - name: "标准上传-带Webhook"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        webhook_key: "${global:webhook_key}"
+        extra_info: "测试Webhook回调"
+        expected_status: "success"
+
+      - name: "标准上传-透传参数"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        params: "21)71"
+        extra_info: "测试透传参数 | ${uuid}"
+        expected_status: "success"
+
+      # 不传任何可选参数，验证服务端默认值（use_cache=true/preview_type=1/...）
+      - name: "标准上传-仅文件参数"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        params: ""
+        webhook_key: ""
+        use_cache: ""
+        extra_info: ""
+        preview_type: ""
+        need_business_service: ""
+        need_stl_light_weight: ""
+        minimum_thickness_threshold: ""
+        high_risk_area_define: ""
+        cover_color: ""
+        expected_status: "success"
+
+      # extra_info 为业务可读文本，验证中文与空格
+      - name: "标准上传-中文扩展信息"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        extra_info: "零件解析-中文扩展信息-测试"
+        expected_status: "success"
+
+      # 验证特殊字符不会破坏 multipart 编码
+      - name: "标准上传-特殊字符扩展信息"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        extra_info: "order:20261027-001 / client:A&B #1 (smoke)"
+        expected_status: "success"
+
+  # 2. 边界值测试
+  - name: "boundary"
+    description: "边界值测试"
+    cases:
+      - name: "预览格式-glb"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        preview_type: "0"
+        extra_info: "glb预览 | ${datetime_now}"
+        expected_status: "success"
+
+      - name: "预览格式-f3d"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        preview_type: "1"
+        extra_info: "f3d预览 | ${datetime_now}"
+        expected_status: "success"
+
+      - name: "薄壁阈值-最小值"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        need_business_service: "1"
+        minimum_thickness_threshold: "0.1"
+        extra_info: "极小薄壁阈值"
+        expected_status: "success"
+
+      - name: "薄壁阈值-最大值"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        need_business_service: "1"
+        minimum_thickness_threshold: "10.0"
+        extra_info: "极大薄壁阈值"
+        expected_status: "success"
+
+      - name: "封面颜色-红色"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        cover_color: "#FF0000"
+        extra_info: "红色封面"
+        expected_status: "success"
+
+      - name: "封面颜色-黑色"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        cover_color: "#000000"
+        extra_info: "黑色封面"
+        expected_status: "success"
+
+      - name: "封面颜色-白色"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        cover_color: "#FFFFFF"
+        extra_info: "白色封面 | ${uuid}"
+        expected_status: "success"
+
+      # 十六进制大小写应等价
+      - name: "封面颜色-小写十六进制"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        cover_color: "#85a2cd"
+        extra_info: "小写十六进制封面 | ${uuid}"
+        expected_status: "success"
+
+      # extra_info 文档约定最大长度 255
+      - name: "扩展信息-长度1"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        extra_info: "${random_string(1)}"
+        expected_status: "success"
+
+      - name: "扩展信息-长度255"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        extra_info: "${random_string(255)}"
+        expected_status: "success"
+
+  # 3. 参数组合测试
+  - name: "combination"
+    description: "参数组合测试"
+    cases:
+      - name: "全部启用"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        use_cache: "true"
+        preview_type: "1"
+        need_business_service: "1"
+        need_stl_light_weight: "1"
+        minimum_thickness_threshold: "0.8"
+        high_risk_area_define: "100.0"
+        cover_color: "#85A2CD"
+        extra_info: "完整处理 | ${uuid}"
+        expected_status: "success"
+
+      - name: "仅预览"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        preview_type: "1"
+        need_business_service: "0"
+        need_stl_light_weight: "0"
+        extra_info: "仅预览 | ${uuid}"
+        expected_status: "success"
+
+      - name: "无任何处理"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        preview_type: "0"
+        need_business_service: "0"
+        need_stl_light_weight: "0"
+        extra_info: "无处理 | ${uuid}"
+        expected_status: "success"
+
+      # 业务类服务依赖的两个参数：高风险区域 + 封面颜色
+      - name: "业务服务+风险区域+封面颜色"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        need_business_service: "1"
+        high_risk_area_define: "100.0"
+        cover_color: "#85A2CD"
+        extra_info: "业务服务组合 | ${uuid}"
+        expected_status: "success"
+
+      # 轻量化通常只对 STL 生效，与业务服务同时开启
+      - name: "轻量化+业务服务-STL"
+        file_name: "${getfile:${global:test_files_dir}:stl}"
+        need_business_service: "1"
+        need_stl_light_weight: "1"
+        extra_info: "STL轻量化 | ${uuid}"
+        expected_status: "success"
+
+      - name: "禁用缓存+业务服务"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        use_cache: "false"
+        need_business_service: "1"
+        extra_info: "禁用缓存+业务服务 | ${uuid}"
+        expected_status: "success"
+
+      # 预览格式 glb + 回调 + STL 轻量化
+      - name: "GLB预览+Webhook+轻量化"
+        file_name: "${getfile:${global:test_files_dir}:stl}"
+        webhook_key: "${global:webhook_key}"
+        preview_type: "0"
+        need_stl_light_weight: "1"
+        extra_info: "GLB+Webhook+轻量化 | ${uuid}"
+        expected_status: "success"
+
+  # 4. 回归测试
+  - name: "regression"
+    description: "回归测试"
+    cases:
+      - name: "回归-多类型文件"
+        file_name: "${getfile:${global:test_files_dir}:stp,step,3mf}"
+        extra_info: "随机文件类型 | ${uuid}"
+        expected_status: "success"
+
+      # 支持格式逐个回归，避免随机取样漏掉某一种
+      - name: "回归-stp格式"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        extra_info: "stp格式 | ${uuid}"
+        expected_status: "success"
+
+      - name: "回归-step格式"
+        file_name: "${getfile:${global:test_files_dir}:step}"
+        extra_info: "step格式 | ${uuid}"
+        expected_status: "success"
+
+      - name: "回归-3mf格式"
+        file_name: "${getfile:${global:test_files_dir}:3mf}"
+        extra_info: "3mf格式 | ${uuid}"
+        expected_status: "success"
+
+      - name: "回归-obj格式"
+        file_name: "${getfile:${global:test_files_dir}:obj}"
+        extra_info: "obj格式 | ${uuid}"
+        expected_status: "success"
+
+      - name: "回归-stl格式"
+        file_name: "${getfile:${global:test_files_dir}:stl}"
+        extra_info: "stl格式 | ${uuid}"
+        expected_status: "success"
+
+      - name: "回归-dxf格式"
+        file_name: "${getfile:${global:test_files_dir}:dxf}"
+        extra_info: "dxf格式 | ${uuid}"
+        expected_status: "success"
+
+      - name: "回归-dwg格式"
+        file_name: "${getfile:${global:test_files_dir}:dwg}"
+        extra_info: "dwg格式 | ${uuid}"
+        expected_status: "success"
+
+      # 大写扩展名，验证服务端文件类型识别大小写不敏感
+      - name: "回归-大写扩展名-STEP"
+        file_name: "2009141489338048512.STEP"
+        extra_info: "大写STEP | ${uuid}"
+        expected_status: "success"
+
+      - name: "回归-大写扩展名-DXF"
+        file_name: "B-YMPS-126.DXF"
+        extra_info: "大写DXF | ${uuid}"
+        expected_status: "success"
+
+      # 文件名包含中文、全角括号、空格
+      - name: "回归-中文特殊字符文件名"
+        file_name: "hbj-ok （4）_x_t.stp"
+        extra_info: "中文特殊字符文件名 | ${uuid}"
+        expected_status: "success"
+
+      - name: "回归-文件名含空格"
+        file_name: "目镜座  cb-mjz.stp"
+        extra_info: "文件名含空格 | ${uuid}"
+        expected_status: "success"
+
+  # 5. 异常测试
+  - name: "negative"
+    description: "异常测试"
+    cases:
+      # 客户端异常：文件不存在，endpoint 在发请求前抛 FileNotFoundError
+      - name: "异常-文件不存在"
+        file_name: "not_exist.stp"
+        extra_info: "文件不存在测试"
+        expected_status: "failed"
+        expect_exception: "FileNotFoundError"
+
+      # 以下为服务端校验异常：expect_exception 依赖 endpoint 在业务码非 200 时抛异常
+      - name: "异常-无效预览格式"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        preview_type: "99"
+        extra_info: "无效预览格式测试"
+        expected_status: "failed"
+        expect_exception: "Exception"
+
+      - name: "异常-预览格式负数"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        preview_type: "-1"
+        extra_info: "预览格式负数测试"
+        expected_status: "failed"
+        expect_exception: "Exception"
+
+      - name: "异常-预览格式越界"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        preview_type: "2"
+        extra_info: "预览格式越界测试"
+        expected_status: "failed"
+        expect_exception: "Exception"
+
+      - name: "异常-预览格式非数字"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        preview_type: "abc"
+        extra_info: "预览格式非数字测试"
+        expected_status: "failed"
+        expect_exception: "Exception"
+
+      - name: "异常-缓存参数非法"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        use_cache: "yes"
+        extra_info: "缓存参数非法测试"
+        expected_status: "failed"
+        expect_exception: "Exception"
+
+      - name: "异常-业务服务参数非法"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        need_business_service: "2"
+        extra_info: "业务服务参数非法测试"
+        expected_status: "failed"
+        expect_exception: "Exception"
+
+      - name: "异常-轻量化参数非法"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        need_stl_light_weight: "-1"
+        extra_info: "轻量化参数非法测试"
+        expected_status: "failed"
+        expect_exception: "Exception"
+
+      - name: "异常-薄壁阈值为负"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        need_business_service: "1"
+        minimum_thickness_threshold: "-0.1"
+        extra_info: "薄壁阈值为负测试"
+        expected_status: "failed"
+        expect_exception: "Exception"
+
+      - name: "异常-薄壁阈值非数字"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        need_business_service: "1"
+        minimum_thickness_threshold: "abc"
+        extra_info: "薄壁阈值非数字测试"
+        expected_status: "failed"
+        expect_exception: "Exception"
+
+      # 上限 10.0 取自 boundary 分组的“薄壁阈值-最大值”
+      - name: "异常-薄壁阈值超出上限"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        need_business_service: "1"
+        minimum_thickness_threshold: "10.01"
+        extra_info: "薄壁阈值超出上限测试"
+        expected_status: "failed"
+        expect_exception: "Exception"
+
+      - name: "异常-高风险面积为负"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        need_business_service: "1"
+        high_risk_area_define: "-1"
+        extra_info: "高风险面积为负测试"
+        expected_status: "failed"
+        expect_exception: "Exception"
+
+      - name: "异常-高风险面积非数字"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        need_business_service: "1"
+        high_risk_area_define: "abc"
+        extra_info: "高风险面积非数字测试"
+        expected_status: "failed"
+        expect_exception: "Exception"
+
+      - name: "异常-封面颜色缺少井号"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        cover_color: "85A2CD"
+        extra_info: "封面颜色缺少井号测试"
+        expected_status: "failed"
+        expect_exception: "Exception"
+
+      - name: "异常-封面颜色非法字符"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        cover_color: "#GGGGGG"
+        extra_info: "封面颜色非法字符测试"
+        expected_status: "failed"
+        expect_exception: "Exception"
+
+      # extra_info 文档约定最大 255，256 应被拒绝
+      - name: "异常-扩展信息超长"
+        file_name: "${getfile:${global:test_files_dir}:stp}"
+        extra_info: "${random_string(256)}"
+        expected_status: "failed"
+        expect_exception: "Exception"
+
+  # 6. 解析记录查询
+  # 上传后用 findByFileId 查询记录；fileName/fileType 需可预测，故用固定文件名
+  - name: "query"
+    description: "上传后按 file_id 查询解析记录"
+    cases:
+      - name: "查询-标准STP"
+        file_name: "配重块.stp"
+        extra_info: "查询默认参数上传记录 | ${uuid}"
+        expected_status: "success"
+        query_timeout: "30"
+        query_interval: "1"
+
+      - name: "查询-STEP格式"
+        file_name: "12.step"
+        extra_info: "查询STEP格式记录 | ${uuid}"
+        expected_status: "success"
+        query_timeout: "30"
+        query_interval: "1"
+
+      - name: "查询-OBJ格式"
+        file_name: "2016817925232435200.obj"
+        extra_info: "查询OBJ格式记录 | ${uuid}"
+        expected_status: "success"
+        query_timeout: "30"
+        query_interval: "1"
+
+      - name: "查询-启用业务服务"
+        file_name: "面板-1.stp"
+        need_business_service: "1"
+        minimum_thickness_threshold: "0.8"
+        high_risk_area_define: "100.0"
+        cover_color: "#85A2CD"
+        extra_info: "查询业务服务记录 | ${uuid}"
+        expected_status: "success"
+        query_timeout: "60"
+        query_interval: "1"
+
+      - name: "查询-禁用缓存"
+        file_name: "主体.stp"
+        use_cache: "false"
+        extra_info: "查询禁用缓存记录 | ${uuid}"
+        expected_status: "success"
+        query_timeout: "30"
+        query_interval: "1"

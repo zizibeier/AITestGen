@@ -1,0 +1,178 @@
+# locators.yaml
+# 3D模型查看器定位元素配置
+
+# iframe定位（如果应用在iframe中）
+iframe:
+  main_iframe: "#root"
+  container: "#root"
+
+# 主要容器元素
+containers:
+  viewer_container: "#root .fc-fullScreen"
+  canvas_container: "canvas[data-engine='three.js r147']"
+  right_menu_container: "#rightMenus"
+  footer_container: ".fc-page-footer"
+
+# 顶部拖拽面板
+drag_panels:
+  panel_container: ".dragBox"
+  feedback_panel: ".dragBox:has-text('反馈群')"
+  mini_program_panel: ".dragBox:has-text('小程序')"
+  panel_header: ".dragHeader"
+  panel_title: ".dragHeaderTitle span"
+  close_icon: ".dragCloseIcon"
+
+# 右侧工具栏面板
+right_panels:
+  model_property: ".dragBox:has(.dragHeaderTitle:has-text('模型总属性'))"
+  coordinate: ".dragBox:has(.dragHeaderTitle:has-text('坐标位置'))"
+  line_panel: ".dragBox:has(.dragHeaderTitle:has-text('线'))"
+  face_panel: ".dragBox:has(.dragHeaderTitle:has-text('面'))"
+  entity_property: ".dragBox:has(.dragHeaderTitle:has-text('实体属性'))"
+  color_selector: ".dragBox:has(.dragHeaderTitle:has-text('颜色选择'))"
+  chromatogram: ".dragBox:has(.dragHeaderTitle:has-text('色谱图示'))"
+  basic_info: ".dragBox:has(.dragHeaderTitle:has-text('基本信息'))"
+  structure_tree: ".dragBox:has(.dragHeaderTitle:has-text('结构树'))"
+  custom_reply: ".dragBox:has(.dragHeaderTitle:has-text('自定义快捷回复'))"
+  annotation: ".dragBox:has(.dragHeaderTitle:has-text('批注'))"
+  settings: ".dragBox:has(.dragHeaderTitle:has-text('设置'))"
+  sectioning: ".dragBox:has(.dragHeaderTitle:has-text('剖切'))"
+
+# 模型属性面板
+model_property:
+  table: ".fc-model-property table"
+  property_rows: "tbody tr"
+  property_name: "td:first-child"
+  property_value: "td:last-child div"
+  volume_value: "td:has(div:has-text('mm³'))"
+  surface_area: "td:has(div:has-text('mm²'))"
+  bounding_box: "td:has(div:has-text('/mm'))"
+
+# 坐标位置面板
+coordinate_panel:
+  container: ".fc-model-property"
+  x_value: ".fc-mode-point:first-child span"
+  y_value: ".fc-mode-point:nth-child(2) span"
+  z_value: ".fc-mode-point:last-child span"
+
+# 颜色选择器
+color_selector:
+  color_picker: ".chrome-picker"
+  color_presets: ".fc-color-selector-tool span"
+  color_input: ".fc-color-selector-tool input"
+  confirm_btn: ".confimBtn"
+  color_value_display: ".fc-color-value"
+  clear_btn: ".clearBtn"
+
+# 基本信息面板
+basic_info:
+  model_name: ".fc-model-info-item:first-child .fc-info-value"
+  volume: ".fc-model-info-item:nth-child(2) .fc-info-value"
+  surface_area: ".fc-model-info-item:nth-child(3) .fc-info-value"
+  bounding_box: ".fc-model-info-item:last-child .fc-info-value"
+
+# 结构树面板
+structure_tree:
+  search_input: ".treeSearchInput"
+  search_btn: ".searchBtn"
+  tree_container: ".react-checkbox-tree"
+  tree_items: ".rct-node"
+  checkbox: ".rct-checkbox"
+
+# 自定义快捷回复面板
+custom_reply:
+  tips_text: ".fc-annotationSetting-tips"
+  import_btn: ".ant-upload-select span"
+  export_btn: ".fc-annotationSetting-rightBtn:has-text('导出')"
+  help_icon: ".fc-annotationSetting-icon"
+  drag_items: ".fc-annotationSetting-dragBox"
+  input_field: ".fc-annotationSetting-input"
+  delete_icon: ".fc-annotationSetting-popConfirm"
+  add_reply_btn: ".fc-annotationSetting-add"
+  cancel_btn: ".fc-annotationSetting-cancel"
+  save_btn: ".fc-annotationSetting-comfirm"
+
+# 批注面板
+annotation:
+  annotation_list: ".annotation-list-container"
+  annotation_empty: ".annotation-empty"
+  empty_title: ".annotation-empty-title"
+  confirm_dialog: ".fc-annotation-confirm"
+  confirm_content: ".fc-confirm-content"
+  confirm_cancel: ".fc-confirm-cancel-btn"
+  confirm_ok: ".fc-confirm-btn"
+
+# 设置面板
+settings:
+  basic_settings_title: ".fc-setting-mainTitle:has-text('基本设置')"
+  advanced_settings_title: ".fc-setting-mainTitle:has-text('高级设置')"
+  background_colors: ".fc-setting-bgSetting span"
+  model_color_select: ".select-color"
+  language_select: ".custom-select:first-child .selected-option"
+  decimal_places: ".custom-select:nth-child(2) .selected-option"
+  zoom_center: ".custom-select:nth-child(3) .selected-option"
+  restore_default: ".fc-setting-restore"
+  help_link: ".fc-help"
+
+# 剖切面板
+sectioning:
+  hide_section_switch: "#hiddenParting"
+  reverse_section_switch: "#reverseParting"
+  reset_btn: ".fc-parting-restore"
+
+# 底部工具栏
+footer_toolbar:
+  container: ".fc-footer-tool-primary"
+  buttons:
+    home: ".fc-tool-btn-box:has(.ic_home)"
+    rotate: ".fc-tool-btn-box:has(.ic_play)"
+    pan: ".fc-tool-btn-box:has(.ic_move)"
+    measure: ".fc-tool-btn-box:has(.ic_measure)"
+    model_property: ".fc-tool-btn-box:has(.ic_model_attribute)"
+    sectioning: ".fc-tool-btn-box:has(.ic_parting)"
+    structure_tree: ".fc-tool-btn-box:has(.ic_structureTree)"
+    explode: ".fc-tool-btn-box:has(.ic_modelSplit)"
+    bounding_box: ".fc-tool-btn-box:has(.ic_boundingBox)"
+    drag: ".fc-tool-btn-box:has(.ic_drag)"
+    color: ".fc-tool-btn-box:has(.ic_color)"
+    realtime_position: ".fc-tool-btn-box:has(.ic_pick_up)"
+    axis: ".fc-tool-btn-box:has(.ic_axis)"
+    info: ".fc-tool-btn-box:has(.ic_info)"
+    display_switch: ".fc-tool-btn-box:has(.ic_showSwitch)"
+    screenshot: ".fc-tool-btn-box:has(.ic_screenshot)"
+    fullscreen: ".fc-tool-btn-box:has(.ic_fullscreen)"
+    settings: ".fc-tool-btn-box:has(.ic_setting)"
+    share: ".fc-tool-btn-box:has(.ic_shareBtn)"
+
+# 右键菜单
+right_menu:
+  container: "#rightMenus"
+  menu_items:
+    show_hide: "#rightMenus_showOrHidden"
+    hide: "#rightMenus_show"
+    show_all: "#rightMenus_showAll"
+    add_annotation: "#rightMenus_addAnnotation"
+    hide_annotation: "#rightMenus_showOrHiddenAnnotation"
+    single_restore: "#rightMenus_singleRestore"
+    all_restore: "#rightMenus_allRestore"
+
+  submenu:
+    container: ".submenu"
+    items: ".submenu-item"
+    hide: "#submenu_show"
+    transparent: "#submenu_transparent"
+    transparent_other: "#submenu_transparentOther"
+    hide_other: "#submenu_hiddenOther"
+    show_all: "#submenu_showAll"
+
+# 3D视图区域
+viewer_3d:
+  canvas: "canvas[data-engine='three.js r147']"
+  view_helper: "#forface3D-viewHelper"
+  rotate_center: ".rotate-box"
+  tooltip: "#cssRender div[style*='background-color: rgba(0, 0, 0, 0.5)']"
+
+# 加载状态
+loading:
+  progress_bar: ".loading-progress"
+  loader: ".fc-loader"

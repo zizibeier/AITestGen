@@ -1,0 +1,63 @@
+# ==================== Python ====================
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# ==================== Virtual environments ====================
+venv/
+.venv/
+.venv-1/
+.venv*/
+env/
+ENV/
+
+# ==================== Secrets / local config ====================
+.env
+.env.*
+!.env.example
+ui/.auth/
+**/storage_state.json
+*.pem
+*.key
+*.p12
+*.pfx
+
+# ==================== Test / report artifacts ====================
+allure-results/
+allure-report/
+**/allure-results/
+**/allure-report/
+common/logs/
+ui/logs/
+ui/screenshots/
+ui/tests/reports/
+downloads/
+*.log
+
+# Visual baselines are environment-specific.
+# Commit intentionally when a baseline is stable: git add -f ui/baselines/...
+ui/baselines/
+
+# Generated Excel reports
+建模测试完整报告_*.xlsx
+批量参数对比_*.xlsx
+
+# ==================== Generated data ====================
+common/utils/webhook_utils/webhook_data.db
+*.sqlite3
+*.db-journal
+~$*.xlsx
+~$*.xls
+
+# ==================== OS / IDE ====================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.mcp.json

@@ -1,0 +1,24 @@
+# Webhook 事件配置（中文注释）
+文件解析事件:
+  完成: "analysis.costing.finished"
+  轻量化完成: "analysis.costing.lightWeight.finished"
+  封面图完成: "analysis.costing.cover_finished"
+  分类完成: "analysis.costing.classify_finished"
+  计算完成: "analysis.costing.computation_finished"
+  DFM完成: "analysis.costing.dfm_finished"
+
+封面图事件:
+  生成成功: "analysis.cover.generated"
+  上传成功: "analysis.cover.uploaded"
+  生成失败: "analysis.cover.failed"
+
+自动报价事件:
+  上传成功: "analysis.model.uploaded"
+  分析完成: "analysis.model.analyzed"
+  分析失败: "analysis.model.failed"
+
+# 事件描述（用于报告）
+事件描述:
+  analysis.costing.finished: "定价计算完成"
+  analysis.cover.generated: "封面图已生成"
+  analysis.model.analyzed: "模型分析完成"
